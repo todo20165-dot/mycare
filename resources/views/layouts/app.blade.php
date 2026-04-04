@@ -7,6 +7,8 @@
     <title>@yield('title', 'MyCare - إدارة الرعاية الصحية')</title>
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('icons/mycare-icon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('icons/mycare-icon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         * {
@@ -78,6 +80,40 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
             border: 1px solid var(--border);
             transition: all 0.3s ease;
+        }
+
+        .install-card {
+            border-left: 4px solid var(--secondary);
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        }
+
+        .install-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .install-icon {
+            width: 46px;
+            height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: white;
+            border-radius: 14px;
+            font-size: 22px;
+        }
+
+        .install-card h3 {
+            margin-bottom: 6px;
+        }
+
+        .install-card p {
+            margin-bottom: 0;
+            color: var(--text-light);
+            font-size: 14px;
         }
 
         .card:hover {
@@ -293,6 +329,18 @@
         <div class="header">
             <h1>💊 MyCare</h1>
             <p>إدارة الرعاية الصحية المنزلية</p>
+        </div>
+
+        <div id="install-prompt" class="card install-card" style="display: none;">
+            <div class="install-header">
+                <span class="install-icon">📲</span>
+                <div>
+                    <h3>ثبت التطبيق</h3>
+                    <p>أضف MyCare إلى الشاشة الرئيسية لتجربة أسرع وأكثر سلاسة.</p>
+                </div>
+            </div>
+            <button type="button" onclick="installApp()" class="btn btn-primary btn-block">تثبيت التطبيق</button>
+            <button type="button" onclick="hideInstallPrompt()" class="btn btn-secondary btn-block">إغلاق</button>
         </div>
 
         <div class="main-content">

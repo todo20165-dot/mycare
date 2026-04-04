@@ -17,9 +17,8 @@ if ('serviceWorker' in navigator) {
 }
 
 // التحقق من توفر PWA
+let deferredPrompt = null;
 if ('beforeinstallprompt' in window) {
-    let deferredPrompt;
-    
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
@@ -28,7 +27,9 @@ if ('beforeinstallprompt' in window) {
     
     window.addEventListener('appinstalled', () => {
         console.log('PWA installed');
+        deferredPrompt = null;
         hideInstallPrompt();
+        showNotification('تم تثبيت التطبيق بنجاح', 'success');
     });
 }
 
@@ -50,6 +51,25 @@ function hideInstallPrompt() {
     if (installPrompt) {
         installPrompt.style.display = 'none';
     }
+}
+
+window.installApp = async function() {
+    if (!deferredPrompt) {
+        showNotification('لا يمكن تثبيت التطبيق حالياً', 'warning');
+        return;
+    }
+
+    deferredPrompt.prompt();
+    const choiceResult = await deferredPrompt.userChoice;
+
+    if (choiceResult.outcome === 'accepted') {
+        showNotification('تم تثبيت التطبيق', 'success');
+    } else {
+        showNotification('تم إلغاء تثبيت التطبيق', 'warning');
+    }
+
+    deferredPrompt = null;
+    hideInstallPrompt();
 }
 
 /**
