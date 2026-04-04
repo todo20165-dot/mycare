@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بدون اتصال - MyCare</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .offline-container {
+            text-align: center;
+            padding: 20px;
+            max-width: 480px;
+        }
+
+        .offline-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .offline-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #0066cc;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .features {
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .features h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            text-align: right;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .feature-list li {
+            list-style: none;
+            margin-bottom: 10px;
+            padding-right: 20px;
+        }
+
+        .feature-list li:before {
+            content: "✓ ";
+            margin-right: 10px;
+            color: #00cc99;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📡</div>
+        <h1>بدون اتصال بالإنترنت</h1>
+        <p>يبدو أنك غير متصل بالإنترنت حالياً</p>
+
+        <div class="offline-message">
+            <p>لا تقلق! يمكنك الوصول إلى بيانات الأدوية والعلامات الحيوية المحفوظة محلياً والعودة عندما يكون الاتصال متاحاً.</p>
+        </div>
+
+        <button class="btn" onclick="location.href='/'">العودة إلى الرئيسية</button>
+
+        <div class="features">
+            <h3>✨ المميزات المتاحة بدون اتصال:</h3>
+            <ul class="feature-list">
+                <li>عرض الأدوية المحفوظة</li>
+                <li>تسجيل الجرعات</li>
+                <li>عرض العلامات الحيوية</li>
+                <li>قراءة الإشعارات</li>
+                <li>مزامنة تلقائية عند الاتصال</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // التحقق من الاتصال
+        window.addEventListener('online', () => {
+            location.reload();
+        });
+
+        // إعادة المحاولة كل 5 ثوان
+        setInterval(() => {
+            fetch('/').then(() => {
+                location.reload();
+            }).catch(() => {
+                // لا يزال بدون اتصال
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
