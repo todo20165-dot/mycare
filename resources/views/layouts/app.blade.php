@@ -403,6 +403,8 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/pwa-init.js') }}"></script>
+    <script src="{{ asset('js/emergency-detection.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

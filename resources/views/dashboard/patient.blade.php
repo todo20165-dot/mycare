@@ -25,11 +25,20 @@
     <div class="section mt-2 mb-2">
         <h3>🔗 ربط وتواصل</h3>
         <div class="grid">
-            <a href="{{ route('patient.search-doctors') }}" class="btn btn-primary btn-block">🔎 البحث عن طبيب وطلب الربط</a>
+            <a href="{{ route('patient.select-disease') }}" class="btn btn-primary btn-block">🏥 اختيار المرض والبحث عن طبيب</a>
+            <a href="{{ route('patient.search-doctors') }}" class="btn btn-secondary btn-block">🔎 البحث عن طبيب</a>
             <a href="{{ route('family-links.index') }}" class="btn btn-secondary btn-block">👪 إدارة روابط الأسرة</a>
             <a href="{{ route('family-links.create') }}" class="btn btn-secondary btn-block">➕ إضافة فرد عائلة</a>
             <a href="{{ route('family-links.pending') }}" class="btn btn-warning btn-block">⏳ طلبات ربط عائلية معلقة</a>
             <a href="{{ route('reports.index') }}" class="btn btn-info btn-block">📊 التقارير الطبية</a>
+        </div>
+    </div>
+
+    <div class="section mt-2 mb-2">
+        <h3>🚨 الطوارئ</h3>
+        <div class="grid">
+            <a href="{{ route('emergency.button') }}" class="btn btn-danger btn-block">🚨 زر الطوارئ</a>
+            <a href="{{ route('emergency.history') }}" class="btn btn-secondary btn-block">📋 سجل حالات الطوارئ</a>
         </div>
     </div>
 

@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            DiseasesTableSeeder::class,
             UsersTableSeeder::class,
             MedicationsTableSeeder::class,
             MedicationLogsTableSeeder::class,

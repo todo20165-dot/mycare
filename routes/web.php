@@ -12,9 +12,11 @@ use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\DiseaseController;
+use App\Http\Controllers\EmergencyController;
 
 // مسارات المصادقة
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', 'no-cache'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -22,7 +24,7 @@ Route::middleware('guest')->group(function () {
 });
 
 // مسارات المستخدمين المصرح لهم
-Route::middleware(['auth', 'cache.headers:private,no-cache,no-store,max-age=0,must-revalidate'])->group(function () {
+Route::middleware(['auth', 'no-cache'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('/profile', [AuthController::class, 'updateProfile']);
@@ -63,6 +65,14 @@ Route::middleware(['auth', 'cache.headers:private,no-cache,no-store,max-age=0,mu
     Route::get('/patient/doctor/{id}', [DoctorPatientController::class, 'showDoctor'])->name('patient.doctor-profile');
     Route::post('/patient/doctor-patient/request', [DoctorPatientController::class, 'requestConnection'])->name('doctor-patient.request-connection');
     Route::delete('/patient/doctor-patient/{id}/disconnect', [DoctorPatientController::class, 'disconnect'])->name('doctor-patient.disconnect');
+    Route::get('/select-disease', [DiseaseController::class, 'selectDisease'])->name('patient.select-disease');
+    Route::post('/select-disease', [DiseaseController::class, 'storeDisease'])->name('patient.store-disease');
+    Route::get('/search-doctors-by-disease', [DiseaseController::class, 'searchDoctorsByDisease'])->name('patient.search-doctors-by-disease');
+// u0645u0633u0627u0631u0627u062a u0627u0644u0637u0648u0627u0631u0626
+    Route::get('/emergency', [EmergencyController::class, 'showEmergencyButton'])->name('emergency.button');
+    Route::post('/emergency/trigger', [EmergencyController::class, 'triggerEmergency'])->name('emergency.trigger');
+    Route::get('/emergency/hospitals', [EmergencyController::class, 'getNearestHospitals'])->name('emergency.hospitals');
+    Route::get('/emergency/history', [EmergencyController::class, 'getEmergencyHistory'])->name('emergency.history');
 
     // لوحة تحكم فرد العائلة
     Route::get('/family/dashboard', [FamilyMemberController::class, 'myPatients'])->name('family.dashboard');
@@ -107,6 +117,12 @@ Route::middleware(['auth'])->prefix('doctor')->name('doctor.')->group(function (
 });
 
 // مسارات الإدارة
+// مسارات AJAX للأمراض
+Route::middleware(['auth'])->group(function () {
+    Route::get('/api/doctors-by-disease', [DiseaseController::class, 'getDoctorsByDisease'])->name('api.doctors-by-disease');
+    Route::post('/api/validate-doctor-disease', [DiseaseController::class, 'validateDoctorForDisease'])->name('api.validate-doctor-disease');
+});
+
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
@@ -132,6 +148,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/medications/create', [AdminController::class, 'createMedication'])->name('medications.create');
     Route::post('/medications', [AdminController::class, 'storeMedication'])->name('medications.store');
     Route::get('/medications/{medication}/edit', [AdminController::class, 'editMedication'])->name('medications.edit');
+    // إدارة الأمراض
+    Route::resource('diseases', DiseaseController::class);
     Route::post('/medications/{medication}', [AdminController::class, 'updateMedication'])->name('medications.update');
     Route::delete('/medications/{medication}', [AdminController::class, 'deleteMedication'])->name('medications.destroy');
 

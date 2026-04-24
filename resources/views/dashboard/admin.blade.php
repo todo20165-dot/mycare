@@ -41,10 +41,16 @@
     </div>
 
     <div class="section mt-2 mb-2">
+        <h3>🧾 إدارة الأمراض</h3>
+        <div class="grid">
+            <a href="{{ route('admin.diseases.index') }}" class="btn btn-primary btn-block">عرض الأمراض</a>
+            <a href="{{ route('admin.diseases.create') }}" class="btn btn-secondary btn-block">➕ إضافة مرض جديد</a>
+        </div>
+    </div>
+
+    <div class="section mt-2 mb-2">
         <h3>📋 إدارة النظام</h3>
         <div class="grid">
-            <a href="#" class="btn btn-primary btn-block">💊 إدارة الأدوية</a>
-            <a href="#" class="btn btn-secondary btn-block">📊 التقارير</a>
             <a href="#" class="btn btn-info btn-block">🔔 إدارة الإشعارات</a>
             <a href="#" class="btn btn-warning btn-block">⚙️ إعدادات النظام</a>
         </div>

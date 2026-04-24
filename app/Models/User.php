@@ -19,6 +19,7 @@ class User extends Authenticatable
         'role',
         'profile_image',
         'bio',
+        'disease_id',
         'is_active',
         'last_login',
     ];
@@ -78,6 +79,11 @@ class User extends Authenticatable
     public function medicalDocuments()
     {
         return $this->hasMany(MedicalDocument::class);
+    }
+    
+    public function disease()
+    {
+        return $this->belongsTo(Disease::class);
     }
 
     public function uploadedDocuments()

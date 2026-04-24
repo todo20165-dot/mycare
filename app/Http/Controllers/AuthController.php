@@ -33,9 +33,10 @@ class AuthController extends Controller
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $request->session()->regenerate();
             $user = Auth::user();
             $user->update(['last_login' => now()]);
-            return redirect()->route('dashboard');
+            return redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors(['email' => 'بيانات الدخول غير صحيحة'])->withInput();
@@ -76,6 +77,7 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
+        $request->session()->regenerate();
         return redirect()->route('dashboard');
     }
 
